@@ -1,0 +1,11 @@
+# Archivos de datos
+*.csv
+*.xlsx
+
+# Carpetas de datasets (extra seguridad)
+Datasets/
+
+# Otros (opcional pero recomendado)
+*.log
+*.tmp
+.DS_Store
