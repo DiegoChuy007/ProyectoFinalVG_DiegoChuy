@@ -121,3 +121,68 @@ if __name__ == "__main__":
     # Verificamos qué tipos de competencia hay (esto servirá para tus filtros en Streamlit)
     print("\nTipos de competencia encontrados:")
     print(df_carga['Tipo_Competicion'].unique())
+
+    # --- DATASET COSTO DEPORTIVO (Gráfica 3) ---
+# --- DATASET COSTO DEPORTIVO (Gráfica 3) ---
+def generar_costo_deportivo(df_lesiones, df_posiciones):
+    print("Generando tabla de Costo Deportivo...")
+    
+    # 1. Sumar todos los días de baja médica por equipo y temporada
+    df_dias_perdidos = df_lesiones.groupby(['club', 'Season'])['Days'].sum().reset_index()
+
+    # --- EL FILTRO "QUITA-ESPACIOS" ---
+    # Esto elimina cualquier espacio en blanco invisible al inicio o final
+    df_dias_perdidos['Season'] = df_dias_perdidos['Season'].astype(str).str.strip()
+    df_posiciones['Season'] = df_posiciones['Season'].astype(str).str.strip()
+    df_dias_perdidos['club'] = df_dias_perdidos['club'].astype(str).str.strip()
+    df_posiciones['Squad'] = df_posiciones['Squad'].astype(str).str.strip()
+
+    # --- BLOQUE DE DIAGNÓSTICO (Para ver qué está fallando) ---
+    print("\n[DIAGNÓSTICO] Temporadas en Lesiones:", df_dias_perdidos['Season'].unique())
+    print("[DIAGNÓSTICO] Temporadas en Posiciones:", df_posiciones['Season'].unique())
+    print("\n[DIAGNÓSTICO] Equipos en Lesiones (Ejemplo):", df_dias_perdidos['club'].head(3).tolist())
+    print("[DIAGNÓSTICO] Equipos en Posiciones (Ejemplo):", df_posiciones['Squad'].head(3).tolist())
+    print("-" * 50)
+
+    # 2. Diccionario de corrección de nombres
+    diccionario_equipos = {
+        'Manchester Utd': 'Manchester United',
+        'Nott\'ham Forest': 'Nottingham Forest',
+        'Newcastle Utd': 'Newcastle United',
+        'Sheffield Utd': 'Sheffield United',
+        'Alavés': 'Deportivo Alavés',
+        'Cádiz': 'Cádiz CF'
+    }
+    df_posiciones['Squad'] = df_posiciones['Squad'].replace(diccionario_equipos)
+
+    # 3. El Gran Cruce (Merge)
+    df_costo = pd.merge(
+        df_dias_perdidos, 
+        df_posiciones, 
+        left_on=['club', 'Season'], 
+        right_on=['Squad', 'Season'], 
+        how='inner' 
+    )
+
+    # 4. Limpieza final si el cruce funcionó
+    if not df_costo.empty:
+        df_costo = df_costo[['Season', 'League', 'Squad', 'Days', 'Rk']]
+        df_costo.columns = ['Temporada', 'Liga', 'Equipo', 'Dias_Perdidos_Totales', 'Posicion_Final']
+        print("✅ Tabla de Costo Deportivo generada con éxito.")
+    else:
+        print("⚠️ ALERTA: El Merge sigue vacío. Revisa el diagnóstico de arriba.")
+
+    return df_costo
+
+# --- PRUEBA FINAL DEL CÓDIGO ---
+if __name__ == "__main__":
+    # Generamos las dos tablas base que necesitamos
+    lesiones_limpias = limpiar_lesiones('Datasets/Dataset_lesiones_ligas.csv')
+    posiciones_limpias = unificar_excel_posiciones('Datasets')
+    
+    # Probamos nuestra nueva función
+    if not posiciones_limpias.empty and not lesiones_limpias.empty:
+        df_impacto = generar_costo_deportivo(lesiones_limpias, posiciones_limpias)
+        print("\n--- MUESTRA DEL COSTO DEPORTIVO ---")
+        # Mostrar los equipos con más días perdidos y su posición
+        print(df_impacto.sort_values(by='Dias_Perdidos_Totales', ascending=False).head(10))
