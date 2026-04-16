@@ -73,40 +73,37 @@ if __name__ == "__main__":
 
 #DATASET minutos
 def generar_tabla_carga_fisica(ruta_data):
-    """
-    Une los 5 archivos de Transfermarkt para obtener los minutos totales
-    por jugador, temporada y tipo de competencia.
-    """
-    print("Cargando y procesando minutos (esto puede tardar con los archivos originales)...")
-    #Cargar Archivos (Usando solo las columnas necesarias para ahorrar RAM)
-    #Nota: Asegúrate de que los nombres coincidan con tus archivos .csv reales
+    print("Cargando y procesando minutos (ahora con Fechas por Mes)...")
+    
+    # 1. Agregamos 'date' en usecols para extraer el mes del partido
     df_app = pd.read_csv(f'{ruta_data}/appearances.csv', usecols=['player_id', 'game_id', 'minutes_played', 'player_name'])
-    df_games = pd.read_csv(f'{ruta_data}/games.csv', usecols=['game_id', 'competition_id', 'season'])
+    df_games = pd.read_csv(f'{ruta_data}/games.csv', usecols=['game_id', 'competition_id', 'season', 'date'])
     df_players = pd.read_csv(f'{ruta_data}/players.csv', usecols=['player_id', 'current_club_id'])
     df_clubs = pd.read_csv(f'{ruta_data}/clubs.csv', usecols=['club_id', 'name', 'domestic_competition_id'])
     df_comp = pd.read_csv(f'{ruta_data}/competitions.csv', usecols=['competition_id', 'type', 'name'])
-    #Renombrar columnas para evitar confusiones
+    
     df_clubs = df_clubs.rename(columns={'name': 'club_name'})
     df_comp = df_comp.rename(columns={'name': 'competition_name', 'type': 'comp_type'})
-    #El Gran Cruce (Pipeline de Merges)
-    #A) Unir apariciones con juegos para tener la Temporada y el ID de competencia
+
+    # Cruces
     df_unido = pd.merge(df_app, df_games, on='game_id', how='left')
-    #B) Unir con competiciones para saber si es Liga, Copa o Selección
     df_unido = pd.merge(df_unido, df_comp, on='competition_id', how='left')
-    #C) Unir con jugadores para obtener su club actual
     df_unido = pd.merge(df_unido, df_players, on='player_id', how='left')
-    # D) Unir con clubs para tener el nombre del equipo
     df_unido = pd.merge(df_unido, df_clubs, left_on='current_club_id', right_on='club_id', how='left')
-    #Agrupación y Limpieza Final
-    #Sumamos los minutos por la combinación que definimos
+
+    # --- MAGIA DEL MES ---
+    df_unido['date'] = pd.to_datetime(df_unido['date'], errors='coerce')
+    df_unido['Mes'] = df_unido['date'].dt.month.fillna(0).astype(int) # Extraemos el mes (1 a 12)
+
+    # Agrupamos agregando el Mes
     tabla_carga = df_unido.groupby(
-        ['player_name', 'club_name', 'competition_name', 'season', 'comp_type']
+        ['player_name', 'club_name', 'competition_name', 'season', 'comp_type', 'Mes']
     )['minutes_played'].sum().reset_index()
-    #Renombrar para que sea amigable con Streamlit
-    tabla_carga.columns = ['Jugador', 'Club', 'Liga/Torneo', 'Temporada', 'Tipo_Competicion', 'Minutos_Totales']
-    #Estandarizar temporada a string (ej. "2022")
+
+    tabla_carga.columns = ['Jugador', 'Club', 'Liga/Torneo', 'Temporada', 'Tipo_Competicion', 'Mes', 'Minutos_Totales']
     tabla_carga['Temporada'] = tabla_carga['Temporada'].astype(str)
-    print("Tabla de Carga Física generada con éxito.")
+
+    print("✅ Tabla de Carga Física con Meses generada con éxito.")
     return tabla_carga
 
 # --- PRUEBA DEL CÓDIGO ---
