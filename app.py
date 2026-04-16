@@ -12,7 +12,7 @@ from limpiezaBasesDatos import (
 
 # 2. Configuración inicial de la página (La pestaña del navegador)
 st.set_page_config(
-    page_title="La Epidemia de Lesiones | IA",
+    page_title="La Epidemia de Lesiones",
     page_icon="⚽",
     layout="wide" # Para que las gráficas ocupen toda la pantalla
 )
@@ -38,13 +38,13 @@ except Exception as e:
     st.stop()
 
 # 5. Encabezado Principal de tu Narrativa
-st.title("⚽🏥 La Epidemia de Lesiones")
-st.subheader("El verdadero costo del fútbol moderno")
+st.title("La epidemia de lesiones: El verdadero costo del fútbol moderno")
+st.subheader("Más torneos, más partidos, más minutos, más exigencia. El límite físico de los jugadores frente a un calendario que no se detiene.")
 
 st.markdown("""
-A través de este análisis de datos, exploraremos si la saturación de los calendarios 
-en el fútbol de élite está llevando a los jugadores a un punto de quiebre físico, 
-y cómo esto impacta directamente en el fracaso deportivo de sus equipos.
+El fútbol de élite ha evolucionado hacia un espectáculo de máxima intensidad, pero el cuerpo humano tiene un límite. Hoy, los sindicatos de jugadores en todo el mundo levantan la voz ante una realidad innegable: 
+el calendario está saturado. A través de los datos, exploramos la pregunta crítica del fútbol actual: 
+¿Estamos rompiendo a los protagonistas del juego?
 """)
 
 st.divider() # Una línea separadora elegante
@@ -57,8 +57,9 @@ import plotly.express as px
 # ==========================================
 # ACTO 1: LA CARGA Y SU CONSECUENCIA 
 # ==========================================
-st.header("Acto 1: La Carga Física vs Las Lesiones ⏱️🏥")
-st.markdown("¿Cómo ha incrementado la exigencia física en las últimas temporadas y qué impacto directo ha tenido en los jugadores? Observamos la evolución de minutos frente a la cantidad de bajas médicas.")
+st.header("1. La carga física: El peso de los minutos y la factura en el cuerpo")
+st.markdown("¿Cómo ha incrementado la exigencia física en las últimas temporadas y qué impacto directo ha tenido en los jugadores? Observamos la evolución de minutos frente a la cantidad de bajas médicas. " \
+"A la izquierda, la acumulación de minutos pone en evidencia un calendario saturado. A la derecha, la consecuencia directa: una clara tendencia al alza en el registro de lesiones. El límite físico de los atletas está a prueba.")
 
 # 1. Definimos nuestros "paquetes" de torneos
 paquete_premier = ['premier-league', 'fa-cup', 'efl-cup', 'community-shield']
@@ -70,11 +71,11 @@ todas_las_de_clubes = paquete_premier + paquete_laliga + paquete_serie_a + paque
 
 # 2. Menú desplegable
 opciones_filtro = {
-    "Todas las Competiciones de Élite": todas_las_de_clubes,
-    "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League y Copas Inglesas": paquete_premier,
-    "🇪🇸 LaLiga y Copas Españolas": paquete_laliga,
-    "🇮🇹 Serie A y Copas Italianas": paquete_serie_a,
-    "🌍 Torneos Internacionales (UEFA)": paquete_uefa
+    "Todas las competiciones": todas_las_de_clubes,
+    "Premier League y Copas Inglesas": paquete_premier,
+    "LaLiga y Copas Españolas": paquete_laliga,
+    "Serie A y Copas Italianas": paquete_serie_a,
+    "Torneos Internacionales (UEFA)": paquete_uefa
 }
 seleccion_usuario = st.selectbox("Filtra por Torneo / Liga:", options=list(opciones_filtro.keys()))
 
@@ -107,7 +108,7 @@ with col_izq:
         x='Temporada', 
         y='Minutos_Totales', 
         color='Tipo_Competicion',
-        title="Evolución de Minutos Jugados",
+        title="Evolución de minutos jugados",
         labels={'Minutos_Totales': 'Minutos Acumulados', 'Tipo_Competicion': 'Tipo de Torneo'},
         barmode='stack',
         color_discrete_sequence=px.colors.qualitative.Set1
@@ -120,13 +121,13 @@ with col_der:
         lesiones_por_temporada,
         x='Season',
         y='Total_Lesiones',
-        title="Evolución de Lesiones Registradas",
+        title="Evolución de lesiones registradas",
         labels={'Season': 'Temporada', 'Total_Lesiones': 'Cantidad de Lesiones'},
         markers=True, # Pone puntitos en cada año
         color_discrete_sequence=['#d62728'] # Color rojo para el tema médico
     )
     # Sombreamos la parte de abajo de la línea para darle un toque más pro
-    fig_lesiones_año.update_traces(fill='tozeroy')
+    
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 
 st.divider()
@@ -134,15 +135,16 @@ st.divider()
 # ==========================================
 # ACTO 2: EL QUIEBRE (Lesiones vs Minutos)
 # ==========================================
-st.header("Acto 2: El Quiebre 💥")
-st.markdown("¿Los jugadores se rompen cuando juegan más? Comparamos directamente la carga física de cada mes con los ingresos al hospital.")
+st.header("2. El quiebre: Cuando el calendario supera al físico")
+st.markdown("¿Los jugadores se rompen cuando juegan más? Comparamos directamente la carga física con el número de lesiones cada mes. " \
+"A la izquierda, el volumen mensual de minutos jugados expone los periodos de mayor asfixia competitiva. A la derecha, el mapa de calor revela la consecuencia: las zonas rojas más oscuras evidencian que los picos de lesiones estallan precisamente durante esos tramos de máxima exigencia sostenida. La fatiga acumulada no perdona.")
 
 # 1. Filtro Maestro de Ligas (Aplica para ambas gráficas)
 opciones_liga_acto2 = [
-    "🏆 Top 3 Ligas (Premier, LaLiga, Serie A)", 
-    "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", 
-    "🇪🇸 LaLiga", 
-    "🇮🇹 Serie A"
+    "Todas las competiciones", 
+    "Premier League", 
+    "LaLiga", 
+    "Serie A"
 ]
 liga_seleccionada_acto2 = st.selectbox("Filtra el análisis por liga:", opciones_liga_acto2)
 
@@ -172,7 +174,7 @@ col1, col2 = st.columns(2)
 
 # --- GRÁFICA IZQUIERDA: MINUTOS ---
 with col1:
-    st.subheader("⏱️ Minutos Acumulados")
+    st.subheader("Minutos acumulados por mes")
     # Agrupamos minutos por Mes usando la tabla que ya trae el mes
     df_car_filtrado['Mes_Nombre'] = df_car_filtrado['Mes'].map(nombres_meses)
     minutos_por_mes = df_car_filtrado.groupby('Mes_Nombre')['Minutos_Totales'].sum().reset_index()
@@ -185,7 +187,7 @@ with col1:
         minutos_por_mes, 
         x='Mes_Nombre', 
         y='Minutos_Totales',
-        title="Total de Minutos Jugados por Mes",
+        title="Total de minutos jugados",
         labels={'Mes_Nombre': 'Mes', 'Minutos_Totales': 'Minutos'},
         color_discrete_sequence=['#1f77b4'] # Color azul profesional
     )
@@ -193,7 +195,7 @@ with col1:
 
 # --- GRÁFICA DERECHA: LESIONES ---
 with col2:
-    st.subheader("🏥 Pico de Lesiones")
+    st.subheader("Pico de lesiones por mes")
     # Extraemos el mes de las lesiones
     df_les_filtrado['Mes'] = df_les_filtrado['injury_from_parsed'].dt.month
     df_les_filtrado['Mes_Nombre'] = df_les_filtrado['Mes'].map(nombres_meses)
@@ -212,7 +214,7 @@ with col2:
         y=matriz_lesiones.index,
         color_continuous_scale="Reds",
         aspect="auto",
-        title="Densidad de Ingresos Médicos"
+        title="Densidad de lesiones"
     )
     st.plotly_chart(fig_quiebre, use_container_width=True)
 
@@ -221,18 +223,31 @@ st.divider()
 # ==========================================
 # ACTO 3: EL COSTO DEPORTIVO (Dispersión)
 # ==========================================
-st.header("Acto 3: El Costo Deportivo 📉")
-st.markdown("¿Tener el hospital lleno te cuesta el campeonato? Cruzamos la cantidad de días que los equipos pierden jugadores por lesión frente a su posición final en la liga.")
+st.header("Acto 3: El costo deportivo")
+st.markdown("¿Tener el hospital lleno te cuesta el campeonato? Relacionamos la cantidad de días que los equipos pierden jugadores por lesión frente a su posición final en la liga. " \
+"En esta gráfica de dispersión, la tendencia es reveladora: a medida que los clubes se desplazan hacia la derecha por acumular más días en la enfermería, sus opciones de pelear por los primeros puestos disminuyen. El desgaste físico trasciende la salud individual del atleta; se convierte en un ancla que frena directamente el éxito deportivo de todo el equipo.")
 
-# Gráfica de Dispersión
+# 1. Creamos el filtro dinámico leyendo las ligas exactas que tienes en tu tabla
+ligas_acto3 = ["Todas las Ligas"] + list(df_costo['Liga'].unique())
+
+# Le agregamos un 'key' único para que Streamlit no lo confunda con los otros filtros
+liga_seleccionada_acto3 = st.selectbox("Filtra el impacto por Liga:", options=ligas_acto3, key="filtro_costo")
+
+# 2. Lógica de filtrado
+if liga_seleccionada_acto3 != "Todas las Ligas":
+    df_costo_filtrado = df_costo[df_costo['Liga'] == liga_seleccionada_acto3]
+else:
+    df_costo_filtrado = df_costo
+
+# 3. Gráfica de Dispersión interactiva
 fig_costo = px.scatter(
-    df_costo, 
+    df_costo_filtrado, 
     x='Dias_Perdidos_Totales', 
     y='Posicion_Final', 
     color='Liga', 
     hover_name='Equipo',
     hover_data=['Temporada'],
-    title="Impacto de las Lesiones en la Clasificación",
+    title=f"Impacto de las Lesiones en la Clasificación: {liga_seleccionada_acto3}",
     labels={
         'Dias_Perdidos_Totales': 'Total de Días de Baja Médica', 
         'Posicion_Final': 'Posición en la Tabla (1 = Campeón)'
@@ -241,7 +256,7 @@ fig_costo = px.scatter(
     size_max=15
 )
 
-# Invertimos el eje Y para que el 1er lugar esté hasta arriba (lo lógico en el fútbol)
+# Invertimos el eje Y para que el 1er lugar (Campeón) esté en la cima de la gráfica
 fig_costo.update_yaxes(autorange="reversed")
 
 st.plotly_chart(fig_costo, use_container_width=True)
