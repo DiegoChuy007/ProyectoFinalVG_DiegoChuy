@@ -127,16 +127,16 @@ opciones_liga_acto2 = [
 ]
 liga_seleccionada_acto2 = st.selectbox("Filtra el análisis por liga:", opciones_liga_acto2)
 #Lógica de filtrado para ambas tablas
-if liga_seleccionada_acto2 == "🏆 Top 3 Ligas (Premier, LaLiga, Serie A)":
+if liga_seleccionada_acto2 == "Todas las competiciones":
     filtro_les = df_lesiones['league'].str.contains('Premier|LaLiga|La Liga|Serie A', case=False, na=False)
     filtro_car = df_carga['Liga/Torneo'].str.contains('premier-league|laliga|serie-a', case=False, na=False)
-elif liga_seleccionada_acto2 == "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League":
+elif liga_seleccionada_acto2 == "Premier League":
     filtro_les = df_lesiones['league'].str.contains('Premier', case=False, na=False)
     filtro_car = df_carga['Liga/Torneo'].str.contains('premier-league', case=False, na=False)
-elif liga_seleccionada_acto2 == "🇪🇸 LaLiga":
+elif liga_seleccionada_acto2 == "LaLiga":
     filtro_les = df_lesiones['league'].str.contains('LaLiga|La Liga', case=False, na=False)
     filtro_car = df_carga['Liga/Torneo'].str.contains('laliga', case=False, na=False)
-else: #Serie A
+else: # Serie A
     filtro_les = df_lesiones['league'].str.contains('Serie A', case=False, na=False)
     filtro_car = df_carga['Liga/Torneo'].str.contains('serie-a', case=False, na=False)
 df_les_filtrado = df_lesiones[filtro_les].copy()

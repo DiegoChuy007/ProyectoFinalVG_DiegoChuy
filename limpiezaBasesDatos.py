@@ -30,10 +30,9 @@ def limpiar_lesiones(ruta_archivo):
     #df = df[df['Injury'].str.contains('Muscle|Hamstring|Tear|Strain', case=False, na=False)]
     return df
 #Prueba rápida
-if __name__ == "__main__":
-    df_lesiones_limpio = limpiar_lesiones('Datasets/Dataset_lesiones_ligas.csv')
-    print("Muestra del dataset de lesiones limpio:")
-    print(df_lesiones_limpio.head())
+df_lesiones_limpio = limpiar_lesiones('Datasets/Dataset_lesiones_ligas.csv')
+print("Muestra del dataset de lesiones limpio:")
+print(df_lesiones_limpio.head())
 
 #----------------------------------------
 #DATASET POSICIONES
@@ -67,10 +66,9 @@ def unificar_excel_posiciones(ruta_carpeta):
     else:
         return pd.DataFrame()
 #Prueba del código
-if __name__ == "__main__":
-    df_posiciones_limpio = unificar_excel_posiciones('Datasets')
-    print(" Muestra de la tabla de posiciones unificada")
-    print(df_posiciones_limpio.head(40))
+df_posiciones_limpio = unificar_excel_posiciones('Datasets')
+print(" Muestra de la tabla de posiciones unificada")
+print(df_posiciones_limpio.head(40))
 
 #----------------------------------------
 #DATASET MINUTOS
@@ -103,14 +101,13 @@ def generar_tabla_carga_fisica(ruta_data):
     print("Tabla de carga física con meses generada con éxito.")
     return tabla_carga
 #Prueba del código
-if __name__ == "__main__":
-    ruta = 'Datasets/baseDatos_Transfermark' 
-    df_carga = generar_tabla_carga_fisica(ruta)
-    print("\nPrimeras filas de la tabla unificada:")
-    print(df_carga.head())
-    #Verificamos qué tipos de competencia hay (esto servirá para los filtros en Streamlit)
-    print("\nTipos de competencia encontrados:")
-    print(df_carga['Tipo_Competicion'].unique())
+ruta = 'Datasets/baseDatos_Transfermark' 
+df_carga = generar_tabla_carga_fisica(ruta)
+print("\nPrimeras filas de la tabla unificada:")
+print(df_carga.head())
+#Verificamos qué tipos de competencia hay (esto servirá para los filtros en Streamlit)
+print("\nTipos de competencia encontrados:")
+print(df_carga['Tipo_Competicion'].unique())
 
 #Costo deportivo
 def generar_costo_deportivo(df_lesiones, df_posiciones):
@@ -130,14 +127,23 @@ def generar_costo_deportivo(df_lesiones, df_posiciones):
     print("[DIAGNÓSTICO] Equipos en Posiciones (Ejemplo):", df_posiciones['Squad'].head(3).tolist())
     print("-" * 50)
     #Diccionario de corrección de nombres
+    # Diccionario de corrección de nombres
     diccionario_equipos = {
         'Manchester Utd': 'Manchester United',
         'Nott\'ham Forest': 'Nottingham Forest',
         'Newcastle Utd': 'Newcastle United',
         'Sheffield Utd': 'Sheffield United',
-        'Alavés': 'Deportivo Alavés',
-        'Cádiz': 'Cádiz CF'
+        'Atlético Madrid': 'Atletico Madrid',
+        'Leganés': 'Leganes',
+        'Almería': 'Almeria',
+        'Athletic Club': 'Athletic Bilbao',
+        'Cádiz CF': 'Cadiz',
+        'Cádiz': 'Cadiz',
+        'Deportivo Alavés': 'Deportivo Alaves',
+        'Alavés': 'Deportivo Alaves',
+        'Milan': 'AC Milan'
     }
+    
     df_posiciones['Squad'] = df_posiciones['Squad'].replace(diccionario_equipos)
     #El gran Cruce
     df_costo = pd.merge(
@@ -159,12 +165,14 @@ def generar_costo_deportivo(df_lesiones, df_posiciones):
 #----------------------------------------
 #PRUEBA FINAL DEL CÓDIGO 
 #----------------------------------------
-if __name__ == "__main__":
-    #Generamos las dos tablas base que necesitamos
-    lesiones_limpias = limpiar_lesiones('Datasets/Dataset_lesiones_ligas.csv')
-    posiciones_limpias = unificar_excel_posiciones('Datasets')
-    if not posiciones_limpias.empty and not lesiones_limpias.empty:
-        df_impacto = generar_costo_deportivo(lesiones_limpias, posiciones_limpias)
-        print("\n Costo deportivo ")
-        #Mostrar los equipos con más días perdidos y su posición
-        print(df_impacto.sort_values(by='Dias_Perdidos_Totales', ascending=False).head(10))
+#Generamos las dos tablas base que necesitamos
+lesiones_limpias = limpiar_lesiones('Datasets/Dataset_lesiones_ligas.csv')
+posiciones_limpias = unificar_excel_posiciones('Datasets')
+if not posiciones_limpias.empty and not lesiones_limpias.empty:
+    df_impacto = generar_costo_deportivo(lesiones_limpias, posiciones_limpias)
+    print("\n Costo deportivo ")
+    #Mostrar los equipos con más días perdidos y su posición
+    print(df_impacto.sort_values(by='Dias_Perdidos_Totales', ascending=False).head(10))
+
+
+
