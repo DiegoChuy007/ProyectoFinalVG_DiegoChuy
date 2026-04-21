@@ -1,11 +1,18 @@
-# Archivos de datos
-*.csv
-*.xlsx
-
-# Carpetas de datasets (extra seguridad)
-Datasets/
-
-# Otros (opcional pero recomendado)
+#Archivos basura del sistema y logs
 *.log
 *.tmp
 .DS_Store
+__pycache__/
+
+#Ignorar la carpeta de salarios
+Datasets/salarios/
+
+#Ignorar todos los archivos pesados dentro de Transfermarkt
+Datasets/baseDatos_Transfermark/*.csv
+
+#¡EXCEPTO los 5 que el código necesita obligatoriamente!
+!Datasets/baseDatos_Transfermark/appearances.csv
+!Datasets/baseDatos_Transfermark/games.csv
+!Datasets/baseDatos_Transfermark/players.csv
+!Datasets/baseDatos_Transfermark/clubs.csv
+!Datasets/baseDatos_Transfermark/competitions.csv
