@@ -66,3 +66,6 @@ Necesitas Python instalado y las siguientes librerías:
 pip install pandas streamlit plotly openpyxl
 ```
 **3. Ejecutar aplicación**: python -m streamlit run app.py
+
+## Link al sitio
+https://proyectofinalvgdiegochuy-yiqvzlp8t89en7cnkzdqcn.streamlit.app/
