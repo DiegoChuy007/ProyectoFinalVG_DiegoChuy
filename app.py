@@ -97,21 +97,20 @@ else:
     df_les_acto1 = df_lesiones[df_lesiones['league'].str.contains('Premier|LaLiga|La Liga|Serie A', case=False, na=False)]
 lesiones_por_temporada = df_les_acto1.groupby('Season').size().reset_index(name='Total_Lesiones')
 
-#PORCENTAJE DE DÍAS DE BAJA POR COVID
+#PORCENTAJE DE COVID
 #Filtramos las dos temporadas de pandemia
 df_pandemia = df_les_acto1[df_les_acto1['Season'].isin(['2020-2021', '2021-2022'])]
-columna_dias = 'Days' 
-#Verificamos que las columnas existan para evitar errores
-if 'Injury' in df_pandemia.columns and columna_dias in df_pandemia.columns and not df_pandemia.empty:
-    #Sumamos todos los días de baja de todas las lesiones en esas dos temporadas
-    total_dias_pandemia = df_pandemia[columna_dias].fillna(0).sum()
-    #Filtramos las lesiones por covid y sumamos sus días de baja
+#Verificamos que la columna 'Injury' exista para evitar errores
+if 'Injury' in df_pandemia.columns and not df_pandemia.empty:
+    total_lesiones_pandemia = len(df_pandemia)
+    #Contamos cuántas dicen "covid", "corona" o "virus"
     lesiones_covid = df_pandemia[df_pandemia['Injury'].str.contains('covid|corona|virus|Corona virus', case=False, na=False)]
-    total_dias_covid = lesiones_covid[columna_dias].fillna(0).sum()
-    #Calculamos el porcentaje basado en días
-    porcentaje_covid_dias = (total_dias_covid / total_dias_pandemia) * 100 if total_dias_pandemia > 0 else 0
+    total_covid = len(lesiones_covid)
+    #Calculamos el porcentaje
+    porcentaje_covid = (total_covid / total_lesiones_pandemia) * 100 if total_lesiones_pandemia > 0 else 0
     #Mostramos el dato de forma visualmente atractiva con tarjetas
-    st.info(f" **Impacto de la pandemia:** De los {int(total_dias_pandemia):,} días totales que los equipos perdieron por bajas médicas entre 2020 y 2022, el **{porcentaje_covid_dias:.1f}%** fueron exclusivamente por contagios y protocolos de COVID-19.")
+    st.info(f" **Impacto de la pandemia:** De las {total_lesiones_pandemia:,} bajas médicas registradas entre 2020 y 2022, el **{porcentaje_covid:.1f}%** estuvieron directamente relacionadas con contagios de COVID-19.")
+# ------------------------------------------
 
 #Dibujamos en dos columnas
 col_izq, col_der = st.columns(2)
