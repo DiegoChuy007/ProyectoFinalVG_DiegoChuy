@@ -223,8 +223,11 @@ st.header("3. El costo deportivo")
 st.markdown("""
 ¿Tener el hospital lleno te cuesta el campeonato? Relacionamos la cantidad de días que los equipos pierden jugadores por lesión frente a su posición final en la liga. 
 
-A primera vista, la dispersión de este gráfico revela una realidad cruda del fútbol moderno: **la salud no garantiza el éxito, pero el dinero es el mejor analgésico.** 1. A la izquierda, vemos equipos con muy pocas lesiones que aún así pelean el descenso; la falta de talento y presupuesto pesa más que tener una plantilla sana. 
-2. A la derecha, observamos equipos de élite que, a pesar de superar los 2,000 días de baja médica por jugar en múltiples competencias, logran ser campeones. ¿La razón? **Su profundidad de plantilla.** Las lesiones no hunden a los equipos ricos en la tabla, simplemente encarecen su costo de operación. El desgaste físico trasciende la salud del atleta; se ha convertido en un "impuesto" carísimo que frena a los clubes promedios y que solo los más poderosos pueden pagar sin dejar de ganar.
+A primera vista, la dispersión de este gráfico revela una realidad cruda del fútbol moderno: **la salud no garantiza el éxito, pero el dinero es el mejor analgésico.** 1. **La escasez de recursos pesa más:** A la izquierda, vemos equipos con muy pocas lesiones que aún así pelean el descenso; la falta de talento y presupuesto castiga más que tener una plantilla sana. 
+2. **El escudo financiero:** A la derecha, observamos equipos de élite que, a pesar de superar los 2,000 días de baja médica por jugar múltiples competencias, logran ser campeones. ¿La razón? **Su profundidad de plantilla.** Las lesiones no los hunden en la tabla, simplemente encarecen su costo de operación. 
+3. **El impacto real por equipo:** Sin embargo, al filtrar el gráfico para analizar a **un equipo individualmente** a lo largo de los años, el verdadero costo deportivo se hace evidente: dentro del propio contexto y límite de cada club, las temporadas con mayor acumulación de lesiones empeoran drásticamente su posición final en la tabla.
+
+El desgaste físico trasciende la salud individual del atleta; se ha convertido en un "impuesto" carísimo que frena el éxito de los clubes promedio, y que solo los más poderosos pueden pagar sin dejar de ganar.
 """)
 
 #--- FILTROS DINÁMICOS ---
