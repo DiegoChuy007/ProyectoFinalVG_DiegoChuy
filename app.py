@@ -127,7 +127,7 @@ st.divider()
 #==========================================
 st.header("2. El quiebre: Cuando el calendario supera al físico")
 st.markdown("¿Los jugadores se rompen cuando juegan más? Comparamos directamente la carga física con el número de lesiones cada mes. " \
-"A la izquierda, el volumen mensual de minutos jugados expone los periodos de mayor asfixia competitiva. A la derecha, el mapa de calor revela la consecuencia: las zonas rojas más oscuras evidencian que los picos de lesiones estallan precisamente durante esos tramos de máxima exigencia sostenida. La fatiga acumulada no perdona."
+"A la izquierda, el volumen mensual de minutos jugados expone los periodos de mayor asfixia competitiva. A la derecha, el mapa de calor revela la consecuencia: las zonas rojas más oscuras evidencian que los picos de lesiones estallan precisamente durante esos tramos de máxima exigencia sostenida. La fatiga acumulada no perdona." \
 
 "Como excepción visible, en el mapa de calor se observa un bloque más claro (con un número atípicamente bajo de lesiones) entre noviembre y diciembre de la temporada 2022-2023. Esto se debe a la pausa sin precedentes de las ligas de clubes provocada por la Copa del Mundo de Qatar 2022.")
 
