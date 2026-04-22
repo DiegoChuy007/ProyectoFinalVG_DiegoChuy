@@ -51,8 +51,18 @@ import plotly.express as px
 #Acto 1
 #==========================================
 st.header("1. La carga física: El peso de los minutos y la factura en el cuerpo")
-st.markdown("¿Cómo ha incrementado la exigencia física en las últimas temporadas y qué impacto directo ha tenido en los jugadores? Observamos la evolución de minutos frente a la cantidad de bajas médicas. " \
-"A la izquierda, la acumulación de minutos pone en evidencia un calendario saturado. A la derecha, la consecuencia directa: una clara tendencia al alza en el registro de lesiones. El límite físico de los atletas está a prueba.")
+st.markdown("""
+¿Cómo ha incrementado la exigencia física en las últimas temporadas y qué impacto directo ha tenido en los jugadores? 
+
+A la izquierda, la acumulación de minutos evidencia un calendario de partidos que ha ido en aumento a lo largo de los años. A la derecha, observamos una clara tendencia al alza en el número de lesiones desde el año 2022 hasta el 2025. 
+
+Es importante destacar que los picos elevados de 2020-2021 y 2021-2022 representan datos atípicos influenciados por la pandemia:
+1. **Los contagios de COVID-19** se registraban directamente como bajas médicas que alejaban a los jugadores varios días.
+2. **El desajuste físico:** volver al ritmo de máxima competencia tras meses de inactividad disparó los problemas musculares.
+3. **La saturación extrema:** la urgencia por terminar las temporadas pausadas comprimió los calendarios, obligando a disputar partidos con muy pocos días de descanso.
+
+*(Nota: Los registros de la temporada 2024-2025 no están completos y contabilizan únicamente las lesiones ocurridas hasta enero).*
+""")
 #Definimos nuestros "paquetes" de torneos
 paquete_premier = ['premier-league', 'fa-cup', 'efl-cup', 'community-shield']
 paquete_laliga = ['laliga', 'copa-del-rey', 'supercopa']
