@@ -47,6 +47,7 @@ st.divider()
 st.info("¡Datos cargados correctamente! Listos para graficar.")
 import plotly.express as px
 
+
 #==========================================
 #Acto 1
 #==========================================
@@ -95,6 +96,22 @@ else:
     #Para "Todas", mostramos el global de las top 3 ligas
     df_les_acto1 = df_lesiones[df_lesiones['league'].str.contains('Premier|LaLiga|La Liga|Serie A', case=False, na=False)]
 lesiones_por_temporada = df_les_acto1.groupby('Season').size().reset_index(name='Total_Lesiones')
+
+#Porcentaje de COVID
+#Filtramos las dos temporadas de pandemia
+df_pandemia = df_les_acto1[df_les_acto1['Season'].isin(['2020-2021', '2021-2022'])]
+#Verificamos que la columna 'Injury' exista para evitar errores
+if 'Injury' in df_pandemia.columns and not df_pandemia.empty:
+    total_lesiones_pandemia = len(df_pandemia)
+    #Contamos cuántas dicen "covid", "corona" o "virus"
+    lesiones_covid = df_pandemia[df_pandemia['Injury'].str.contains('covid|corona|virus|Corona virus', case=False, na=False)]
+    total_covid = len(lesiones_covid)
+    #Calculamos el porcentaje
+    porcentaje_covid = (total_covid / total_lesiones_pandemia) * 100 if total_lesiones_pandemia > 0 else 0
+    #Mostramos el dato de forma visualmente atractiva con tarjetas
+    st.info(f" **Impacto de la pandemia:** De las {total_lesiones_pandemia:,} bajas médicas registradas entre 2020 y 2022, el **{porcentaje_covid:.1f}%** estuvieron directamente relacionadas con contagios de COVID-19.")
+# ------------------------------------------
+
 #Dibujamos en dos columnas
 col_izq, col_der = st.columns(2)
 with col_izq:
