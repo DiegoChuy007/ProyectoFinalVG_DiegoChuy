@@ -220,34 +220,61 @@ st.divider()
 #Acto 3
 #==========================================
 st.header("3. El costo deportivo")
-st.markdown("¿Tener el hospital lleno te cuesta el campeonato? Relacionamos la cantidad de días que los equipos pierden jugadores por lesión frente a su posición final en la liga. " \
-"En esta gráfica de dispersión, la tendencia es reveladora: a medida que los clubes se desplazan hacia la derecha por acumular más días en la enfermería, sus opciones de pelear por los primeros puestos disminuyen. El desgaste físico trasciende la salud individual del atleta; se convierte en un ancla que frena directamente el éxito deportivo de todo el equipo.")
-#Creamos el filtro dinámico leyendo las ligas exactas que tienes en tu tabla
-ligas_acto3 = ["Todas las Ligas"] + list(df_costo['Liga'].unique())
-#Agregamos un 'key' único para que Streamlit no lo confunda con los otros filtros
-liga_seleccionada_acto3 = st.selectbox("Filtra el impacto por Liga:", options=ligas_acto3, key="filtro_costo")
-#Lógica de filtrado
+st.markdown("""
+¿Tener el hospital lleno te cuesta el campeonato? Relacionamos la cantidad de días que los equipos pierden jugadores por lesión frente a su posición final en la liga. 
+
+A primera vista, la dispersión de este gráfico revela una realidad cruda del fútbol moderno: **la salud no garantiza el éxito, pero el dinero es el mejor analgésico.** 1. A la izquierda, vemos equipos con muy pocas lesiones que aún así pelean el descenso; la falta de talento y presupuesto pesa más que tener una plantilla sana. 
+2. A la derecha, observamos equipos de élite que, a pesar de superar los 2,000 días de baja médica por jugar en múltiples competencias, logran ser campeones. ¿La razón? **Su profundidad de plantilla.** Las lesiones no hunden a los equipos ricos en la tabla, simplemente encarecen su costo de operación. El desgaste físico trasciende la salud del atleta; se ha convertido en un "impuesto" carísimo que frena a los clubes promedios y que solo los más poderosos pueden pagar sin dejar de ganar.
+""")
+
+#--- FILTROS DINÁMICOS ---
+col_filtro1, col_filtro2 = st.columns(2)
+
+with col_filtro1:
+    # Filtro de Liga (el que ya tenías)
+    ligas_acto3 = ["Todas las Ligas"] + list(df_costo['Liga'].unique())
+    liga_seleccionada_acto3 = st.selectbox("1. Selecciona una Liga:", options=ligas_acto3, key="filtro_costo")
+
+# Filtramos primero por liga para que el segundo filtro solo muestre equipos de esa liga
 if liga_seleccionada_acto3 != "Todas las Ligas":
-    df_costo_filtrado = df_costo[df_costo['Liga'] == liga_seleccionada_acto3]
+    df_previo = df_costo[df_costo['Liga'] == liga_seleccionada_acto3]
 else:
-    df_costo_filtrado = df_costo
+    df_previo = df_costo
+
+with col_filtro2:
+    # Nuevo Filtro de Equipo (Multiselect para poder comparar 2 o 3 si se desea)
+    equipos_disponibles = sorted(df_previo['Equipo'].unique())
+    equipos_seleccionados = st.multiselect(
+        "2. Filtra por equipo(s) específico(s):", 
+        options=equipos_disponibles,
+        default=equipos_disponibles, # Por defecto muestra todos
+        help="Selecciona uno o varios equipos para ver su evolución histórica"
+    )
+
+# Aplicamos el filtro final
+df_costo_filtrado = df_previo[df_previo['Equipo'].isin(equipos_seleccionados)]
+
 #Gráfica de Dispersión interactiva
 fig_costo = px.scatter(
     df_costo_filtrado, 
     x='Dias_Perdidos_Totales', 
     y='Posicion_Final', 
-    color='Liga', 
+    color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', # Cambia color a equipo si son pocos
     hover_name='Equipo',
-    hover_data=['Temporada'],
-    title=f"Impacto de las Lesiones en la Clasificación: {liga_seleccionada_acto3}",
+    hover_data=['Temporada', 'Liga'],
+    title=f"Análisis Personalizado: Lesiones vs Posición",
     labels={
         'Dias_Perdidos_Totales': 'Total de Días de Baja Médica', 
-        'Posicion_Final': 'Posición en la Tabla (1 = Campeón)'
+        'Posicion_Final': 'Posición en la Tabla'
     },
     size='Dias_Perdidos_Totales',
-    size_max=15
+    size_max=15,
+    text='Temporada' if len(equipos_seleccionados) == 1 else None # Si elige solo un equipo, muestra la temporada en el punto
 )
-#Invertimos el eje Y para que el 1er lugar (Campeón) esté en la cima de la gráfica
-fig_costo.update_yaxes(autorange="reversed")
+
+# Estética de la gráfica
+fig_costo.update_traces(textposition='top center')
+fig_costo.update_yaxes(autorange="reversed", dtick=1) # dtick=1 para ver cada posición claramente
 st.plotly_chart(fig_costo, use_container_width=True)
+
 st.success("¡Análisis visual completado! La narrativa de datos está lista para ser presentada.")
