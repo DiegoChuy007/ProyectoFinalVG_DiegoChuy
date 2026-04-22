@@ -54,14 +54,14 @@ st.header("1. La carga física: El peso de los minutos y la factura en el cuerpo
 st.markdown("""
 ¿Cómo ha incrementado la exigencia física en las últimas temporadas y qué impacto directo ha tenido en los jugadores? 
 
-A la izquierda, la acumulación de minutos evidencia un calendario de partidos que ha ido en aumento a lo largo de los años. A la derecha, observamos una clara tendencia al alza en el número de lesiones desde el año 2022 hasta el 2025. 
+A la izquierda, la acumulación de minutos pone en evidencia un calendario de partidos que ha ido en aumento a lo largo de los años. A la derecha, observamos una clara tendencia al alza en el número de lesiones desde el año 2022 hasta el 2025. 
 
-Es importante destacar que los picos elevados de 2020-2021 y 2021-2022 representan datos atípicos influenciados por la pandemia:
+Es importante destacar que los picos elevados en el gráfico de la derecha de 2020-2021 y 2021-2022 representan datos atípicos influenciados por la pandemia:
 1. **Los contagios de COVID-19** se registraban directamente como bajas médicas que alejaban a los jugadores varios días.
 2. **El desajuste físico:** volver al ritmo de máxima competencia tras meses de inactividad disparó los problemas musculares.
 3. **La saturación extrema:** la urgencia por terminar las temporadas pausadas comprimió los calendarios, obligando a disputar partidos con muy pocos días de descanso.
 
-*(Nota: Los registros de la temporada 2024-2025 no están completos y contabilizan únicamente las lesiones ocurridas hasta enero).*
+*(Nota: Los registros de la temporada 2024-2025 no están completos y contabilizan únicamente hasta enero).*
 """)
 #Definimos nuestros "paquetes" de torneos
 paquete_premier = ['premier-league', 'fa-cup', 'efl-cup', 'community-shield']
@@ -127,7 +127,9 @@ st.divider()
 #==========================================
 st.header("2. El quiebre: Cuando el calendario supera al físico")
 st.markdown("¿Los jugadores se rompen cuando juegan más? Comparamos directamente la carga física con el número de lesiones cada mes. " \
-"A la izquierda, el volumen mensual de minutos jugados expone los periodos de mayor asfixia competitiva. A la derecha, el mapa de calor revela la consecuencia: las zonas rojas más oscuras evidencian que los picos de lesiones estallan precisamente durante esos tramos de máxima exigencia sostenida. La fatiga acumulada no perdona.")
+"A la izquierda, el volumen mensual de minutos jugados expone los periodos de mayor asfixia competitiva. A la derecha, el mapa de calor revela la consecuencia: las zonas rojas más oscuras evidencian que los picos de lesiones estallan precisamente durante esos tramos de máxima exigencia sostenida. La fatiga acumulada no perdona."
+"Como excepción visible, en el mapa de calor se observa un bloque más claro (con un número atípicamente bajo de lesiones) entre noviembre y diciembre de la temporada 2022-2023. Esto se debe a la pausa sin precedentes de las ligas de clubes provocada por la Copa del Mundo de Qatar 2022.")
+
 #Filtro de ligas (Aplica para ambas gráficas)
 opciones_liga_acto2 = [
     "Todas las competiciones", 
