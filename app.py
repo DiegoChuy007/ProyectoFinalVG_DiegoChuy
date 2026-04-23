@@ -231,39 +231,34 @@ A primera vista, la dispersión de este gráfico revela una realidad cruda del f
 El desgaste físico trasciende la salud individual del atleta; se ha convertido en un "impuesto" carísimo que frena el éxito de los clubes promedio, y que solo los más poderosos pueden pagar sin dejar de ganar.
 """)
 
-#--- FILTROS DINÁMICOS ---
+#Filtros dinámicos
 col_filtro1, col_filtro2 = st.columns(2)
-
 with col_filtro1:
-    # Filtro de Liga (el que ya tenías)
+    #Filtro de Liga 
     ligas_acto3 = ["Todas las Ligas"] + list(df_costo['Liga'].unique())
     liga_seleccionada_acto3 = st.selectbox("1. Selecciona una Liga:", options=ligas_acto3, key="filtro_costo")
-
-# Filtramos primero por liga para que el segundo filtro solo muestre equipos de esa liga
+#Filtramos primero por liga para que el segundo filtro solo muestre equipos de esa liga
 if liga_seleccionada_acto3 != "Todas las Ligas":
     df_previo = df_costo[df_costo['Liga'] == liga_seleccionada_acto3]
 else:
     df_previo = df_costo
-
 with col_filtro2:
-    # Nuevo Filtro de Equipo (Multiselect para poder comparar 2 o 3 si se desea)
+    #Filtro de Equipo
     equipos_disponibles = sorted(df_previo['Equipo'].unique())
     equipos_seleccionados = st.multiselect(
         "2. Filtra por equipo(s) específico(s):", 
         options=equipos_disponibles,
-        default=equipos_disponibles, # Por defecto muestra todos
+        default=equipos_disponibles, #Por defecto muestra todos
         help="Selecciona uno o varios equipos para ver su evolución histórica"
     )
-
-# Aplicamos el filtro final
+#Aplicamos el filtro final
 df_costo_filtrado = df_previo[df_previo['Equipo'].isin(equipos_seleccionados)]
-
 #Gráfica de Dispersión interactiva
 fig_costo = px.scatter(
     df_costo_filtrado, 
     x='Dias_Perdidos_Totales', 
     y='Posicion_Final', 
-    color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', # Cambia color a equipo si son pocos
+    color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', #Cambia color a equipo si son pocos
     hover_name='Equipo',
     hover_data=['Temporada', 'Liga'],
     title=f"Análisis Personalizado: Lesiones vs Posición",
@@ -273,12 +268,22 @@ fig_costo = px.scatter(
     },
     size='Dias_Perdidos_Totales',
     size_max=15,
-    text='Temporada' if len(equipos_seleccionados) == 1 else None # Si elige solo un equipo, muestra la temporada en el punto
+    text='Temporada' if len(equipos_seleccionados) == 1 else None #Si elige solo un equipo, muestra la temporada en el punto
 )
-
-# Estética de la gráfica
+#Estética de la gráfica
 fig_costo.update_traces(textposition='top center')
-fig_costo.update_yaxes(autorange="reversed", dtick=1) # dtick=1 para ver cada posición claramente
+fig_costo.update_yaxes(autorange="reversed", dtick=1) 
 st.plotly_chart(fig_costo, use_container_width=True)
-
 st.success("¡Análisis visual completado! La narrativa de datos está lista para ser presentada.")
+
+#==========================================
+# Conclusión General
+#==========================================
+st.header("Conclusión")
+st.info("""
+**El fútbol moderno ha cruzado una línea crítica.** Los datos demuestran que la saturación del calendario y la acumulación de minutos se traducen directamente en un aumento sistemático de lesiones. 
+
+Este desgaste físico ha dejado de ser un simple riesgo del juego para convertirse en un **"impuesto a la competitividad"**. Mientras los equipos de élite logran blindarse gracias al poder financiero y la profundidad de sus plantillas, la gran mayoría de los clubes paga esta epidemia con el verdadero costo deportivo: perdiendo puntos y posiciones en la tabla. 
+
+La evidencia es clara: si el ritmo de exigencia no se regula, el sistema actual es insostenible tanto para la salud del jugador como para la equidad del deporte.
+""")
