@@ -175,8 +175,9 @@ with col_izq:
         title="Evolución de minutos jugados",
         labels={'Minutos_Totales': 'Minutos Acumulados', 'Tipo_Competicion': 'Tipo de Torneo'},
         barmode='stack',
-        color_discrete_sequence=px.colors.qualitative.Set1
+        color_discrete_sequence=['#1e293b', '#10b981', '#3b82f6', '#94a3b8']
     )
+    fig_carga.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     st.plotly_chart(fig_carga, use_container_width=True)
 with col_der:
     fig_lesiones_año = px.line(
@@ -186,19 +187,22 @@ with col_der:
         title="Evolución de lesiones registradas",
         labels={'Season': 'Temporada', 'Total_Lesiones': 'Cantidad de Lesiones'},
         markers=True, 
-        color_discrete_sequence=['#d62728']
+        color_discrete_sequence=['#e11d48']
     )
-    fig_lesiones_año.add_annotation(
-        x="2020-2021", 
-        y=lesiones_por_temporada[lesiones_por_temporada['Season'] == "2020-2021"]['Total_Lesiones'].values[0],
-        text="Crisis COVID-19",
-        showarrow=True,
-        arrowhead=2,
-        ax=0,
-        ay=-40,
-        bgcolor="white",
-        bordercolor="#d62728",
-        borderwidth=1
+    fig_lesiones_año.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+    fig_lesiones_año.add_vrect(
+        x0="2020-2021", 
+        x1="2021-2022",
+        fillcolor="#d62728", 
+        opacity=0.15,        
+        layer="below",       
+        line_width=2, 
+        line_dash="dot",     
+        line_color="#d62728",
+        annotation_text="⚠️ Período Crisis COVID-19", 
+        annotation_position="top",
+        annotation_font_color="#d62728",
+        annotation_font_size=13
     )
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 st.divider()
@@ -344,10 +348,12 @@ fig_costo = px.scatter(
     size='Dias_Perdidos_Totales',
     size_max=15,
     text='Temporada' if len(equipos_seleccionados) == 1 else None #Si elige solo un equipo, muestra la temporada en el punto
+    color_discrete_sequence=['#1e293b', '#10b981', '#e11d48', '#f59e0b', '#3b82f6', '#8b5cf6']
 )
 #Estética de la gráfica
 fig_costo.update_traces(textposition='top center')
 fig_costo.update_yaxes(autorange="reversed", dtick=1) 
+fig_costo.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
 st.plotly_chart(fig_costo, use_container_width=True)
 st.success("¡Análisis visual completado! La narrativa de datos está lista para ser presentada.")
 
