@@ -208,7 +208,7 @@ with col_der:
         showarrow=False,
         xshift=65,       
         yshift=20,       
-        font=dict(color="475569", size=13)
+        font=dict(color="#475569", size=13)
     )
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 st.divider()
