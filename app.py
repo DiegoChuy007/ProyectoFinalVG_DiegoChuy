@@ -188,6 +188,18 @@ with col_der:
         markers=True, 
         color_discrete_sequence=['#d62728']
     )
+    fig_lesiones_año.add_annotation(
+        x="2020-2021", 
+        y=lesiones_por_temporada[lesiones_por_temporada['Season'] == "2020-2021"]['Total_Lesiones'].values[0],
+        text="Crisis COVID-19",
+        showarrow=True,
+        arrowhead=2,
+        ax=0,
+        ay=-40,
+        bgcolor="white",
+        bordercolor="#d62728",
+        borderwidth=1
+    )
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 st.divider()
 
@@ -264,6 +276,17 @@ with col2:
         color_continuous_scale="Reds",
         aspect="auto",
         title="Densidad de lesiones"
+    )
+    fig_quiebre.add_annotation(
+        x="Nov", 
+        y="2022-2023",
+        text="Parón Qatar 2022",
+        showarrow=True,
+        arrowhead=2,
+        ax=40,
+        ay=-30,
+        bgcolor="rgba(255, 255, 255, 0.8)",
+        bordercolor="gray"
     )
     st.plotly_chart(fig_quiebre, use_container_width=True)
 st.divider()
