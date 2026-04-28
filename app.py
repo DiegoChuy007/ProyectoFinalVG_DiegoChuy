@@ -351,14 +351,13 @@ with col_filtro2:
     )
 #Aplicamos el filtro final
 df_costo_filtrado = df_previo[df_previo['Equipo'].isin(equipos_seleccionados)]
-#Gráfica de Dispersión interactiva
-# Gráfica de Dispersión interactiva ANIMADA
+#Gráfica de Dispersión interactiva animada
 fig_costo = px.scatter(
-    df_costo_filtrado.sort_values('Temporada'), # Ordenamos para que la animación fluya correctamente
+    df_costo_filtrado.sort_values('Temporada'), #Ordenamos para que la animación fluya correctamente
     x='Dias_Perdidos_Totales', 
     y='Posicion_Final', 
-    animation_frame='Temporada', # <-- ESTA ES LA LÍNEA MÁGICA
-    animation_group='Equipo',    # <-- Le dice a Plotly que siga al mismo equipo a través de los años
+    animation_frame='Temporada', 
+    animation_group='Equipo',    
     color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', 
     hover_name='Equipo',
     hover_data=['Liga'],
@@ -369,18 +368,20 @@ fig_costo = px.scatter(
     },
     size='Dias_Perdidos_Totales',
     size_max=20,
-    # Fijamos los ejes para que la "caja" de la gráfica no brinque durante la animación
+    #Fijamos los ejes para que la "caja" de la gráfica no brinque durante la animación
     range_x=[-100, df_costo_filtrado['Dias_Perdidos_Totales'].max() + 300],
-    range_y=[22, -1], # Eje Y invertido para que el 1 (Campeón) esté arriba
+    range_y=[22, -1], #Eje Y invertido para que el 1 (Campeón) esté arriba
     color_discrete_sequence=['#0f172a', '#10b981', '#2563eb', '#38bdf8', '#64748b', '#34d399']
 )
-
-# Estética de la gráfica animada
+#Configuración de la velocidad de aniamción
+fig_costo.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 1500
+fig_costo.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 1000
+#Estética de la gráfica animada
 fig_costo.update_yaxes(dtick=1) 
 fig_costo.update_layout(
     paper_bgcolor="rgba(0,0,0,0)", 
     plot_bgcolor="rgba(0,0,0,0)",
-    updatemenus=[dict(type="buttons", showactive=False)] # Limpia un poco los botones del reproductor
+    updatemenus=[dict(type="buttons", showactive=False)] #Limpia un poco los botones del reproductor
 )
 st.plotly_chart(fig_costo, use_container_width=True)
 st.success("¡Análisis visual completado! La narrativa de datos está lista para ser presentada.")
