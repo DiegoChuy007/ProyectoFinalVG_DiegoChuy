@@ -347,7 +347,7 @@ fig_costo = px.scatter(
     },
     size='Dias_Perdidos_Totales',
     size_max=15,
-    text='Temporada' if len(equipos_seleccionados) == 1 else None #Si elige solo un equipo, muestra la temporada en el punto
+    text='Temporada' if len(equipos_seleccionados) == 1 else None, #Si elige solo un equipo, muestra la temporada en el punto
     color_discrete_sequence=['#1e293b', '#10b981', '#e11d48', '#f59e0b', '#3b82f6', '#8b5cf6']
 )
 #Estética de la gráfica
