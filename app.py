@@ -17,15 +17,18 @@ st.set_page_config(
     layout="wide" 
 )
 
+# Estilo para forzar un ancho centrado y profesional
 st.markdown("""
     <style>
-    .main .block-container {
-        padding-left: 50rem;   
-        padding-right: 50rem;  
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-        max-width: 100%;
+    /* Restringimos el ancho máximo de toda la aplicación y la centramos */
+    .block-container {
+        max-width: 1100px !important; /* Ajusta este número: 900px (más angosto) a 1400px (más ancho) */
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        margin: 0 auto !important; /* Esto garantiza que el bloque quede en el mero centro */
     }
+    
+    /* Estilo de las tarjetas de métricas (KPIs) */
     [data-testid="stMetric"] {
         background-color: #f8f9fb;
         padding: 25px;
