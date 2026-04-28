@@ -19,20 +19,21 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-    /* Ampliar márgenes laterales */
+    /* Aumentamos el padding lateral para centrar más el contenido */
     .main .block-container {
-        padding-left: 8rem;
-        padding-right: 8rem;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-left: 15rem;   /* Antes estaba en 8rem */
+        padding-right: 15rem;  /* Antes estaba en 8rem */
+        padding-top: 3rem;
+        padding-bottom: 3rem;
     }
-    /* Estilizar las tarjetas de métricas (KPIs) */
+    
+    /* Mantenemos el estilo de las métricas */
     [data-testid="stMetric"] {
-        background-color: #f0f2f6;
-        padding: 20px;
+        background-color: #f8f9fb;
+        padding: 25px;
         border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid #ebedef;
     }
     </style>
     """, unsafe_allow_html=True)
