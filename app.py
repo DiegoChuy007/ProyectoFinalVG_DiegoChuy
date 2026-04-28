@@ -187,18 +187,18 @@ with col_der:
         title="Evolución de lesiones registradas",
         labels={'Season': 'Temporada', 'Total_Lesiones': 'Cantidad de Lesiones'},
         markers=True, 
-        color_discrete_sequence=['#e11d48']
+        color_discrete_sequence=['#10b981']
     )
     fig_lesiones_año.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     fig_lesiones_año.add_vrect(
         x0="2020-2021", 
         x1="2021-2022",
-        fillcolor="#d62728", 
+        fillcolor="#94a3b8", 
         opacity=0.15,        
         layer="below",       
         line_width=2, 
         line_dash="dot",     
-        line_color="#d62728"
+        line_color="#475569"
     )
     fig_lesiones_año.add_annotation(
         x="2020-2021",   
@@ -208,7 +208,7 @@ with col_der:
         showarrow=False,
         xshift=65,       
         yshift=20,       
-        font=dict(color="#d62728", size=13)
+        font=dict(color="475569", size=13)
     )
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 st.divider()
@@ -283,7 +283,7 @@ with col2:
         labels=dict(x="Mes", y="Temporada", color="Lesiones"),
         x=matriz_lesiones.columns,
         y=matriz_lesiones.index,
-        color_continuous_scale="Reds",
+        color_continuous_scale=['#f8fafc', '#6ee7b7', '#10b981', '#1e3a8a', '#020617'],
         aspect="auto",
         title="Densidad de lesiones"
     )
@@ -295,9 +295,9 @@ with col2:
         arrowhead=2,
         ax=40,
         ay=-30,
-        bgcolor="rgba(255, 255, 255, 0.8)",
-        bordercolor="gray"
+        bgcolor="rgba(255, 255, 255, 0.9)", bordercolor="#475569", font=dict(color="#0f172a"),
     )
+    fig_quiebre.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
     st.plotly_chart(fig_quiebre, use_container_width=True)
 st.divider()
 
@@ -354,7 +354,7 @@ fig_costo = px.scatter(
     size='Dias_Perdidos_Totales',
     size_max=15,
     text='Temporada' if len(equipos_seleccionados) == 1 else None, #Si elige solo un equipo, muestra la temporada en el punto
-    color_discrete_sequence=['#1e293b', '#10b981', '#e11d48', '#f59e0b', '#3b82f6', '#8b5cf6']
+    color_discrete_sequence=['#0f172a', '#10b981', '#2563eb', '#38bdf8', '#64748b', '#34d399']
 )
 #Estética de la gráfica
 fig_costo.update_traces(textposition='top center')
