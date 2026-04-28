@@ -74,7 +74,7 @@ except Exception as e:
 st.title("La epidemia de lesiones: El verdadero costo del fútbol moderno")
 st.image(
     "imagen.jpeg", 
-    caption="Fuente: https://mbpschool.com/las-lesiones-en-el-futbol/", 
+    caption="Fuente: https://www.menshealth.com/es/fitness/a31259003/lesiones-futbol-laliga-entrenamiento-invisible/", 
     use_container_width=True
 )
 st.subheader("Más torneos, más partidos, más minutos, más exigencia. El límite físico de los jugadores frente a un calendario que no se detiene.")
