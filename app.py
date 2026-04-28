@@ -17,6 +17,26 @@ st.set_page_config(
     layout="wide" 
 )
 
+st.markdown("""
+    <style>
+    /* Ampliar márgenes laterales */
+    .main .block-container {
+        padding-left: 8rem;
+        padding-right: 8rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    /* Estilizar las tarjetas de métricas (KPIs) */
+    [data-testid="stMetric"] {
+        background-color: #f0f2f6;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border: 1px solid #e0e0e0;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 #El Motor de Caché
 #Este decorador hace que Streamlit solo limpie los datos la primera vez que abres la app.
 @st.cache_data
@@ -47,6 +67,28 @@ st.divider()
 st.info("¡Datos cargados correctamente! Listos para graficar.")
 import plotly.express as px
 
+#==========================================
+#Resumen Ejecutivo (KPIs)
+#==========================================
+st.subheader("Resumen Global del Impacto")
+kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+
+#Cálculos globales basados en tus DataFrames
+total_lesiones_global = len(df_lesiones)
+total_dias_perdidos = df_lesiones['Days'].sum()
+avg_dias_lesion = df_lesiones['Days'].mean()
+total_minutos_global = df_carga['Minutos_Totales'].sum() / 1e6 # En millones
+
+with kpi1:
+    st.metric("Lesiones Totales", f"{total_lesiones_global:,}")
+with kpi2:
+    st.metric("Días de Baja", f"{total_dias_perdidos:,}")
+with kpi3:
+    st.metric("Promedio por Lesión", f"{avg_dias_lesion:.1f} días")
+with kpi4:
+    st.metric("Carga Física Total", f"{total_minutos_global:.1f}M min")
+
+st.divider()
 
 #==========================================
 #Acto 1
