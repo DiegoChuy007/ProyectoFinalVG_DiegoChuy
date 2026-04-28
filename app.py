@@ -17,7 +17,7 @@ st.set_page_config(
     layout="wide" 
 )
 
-# Estilo para forzar un ancho centrado y profesional
+#Estilo para forzar un ancho centrado y un estilo profesional
 st.markdown("""
     <style>
     .block-container {
