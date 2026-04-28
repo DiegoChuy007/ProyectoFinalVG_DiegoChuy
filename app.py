@@ -20,8 +20,8 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main .block-container {
-        padding-left: 25rem;   
-        padding-right: 25rem;  
+        padding-left: 50rem;   
+        padding-right: 50rem;  
         padding-top: 3rem;
         padding-bottom: 3rem;
         max-width: 100%;
