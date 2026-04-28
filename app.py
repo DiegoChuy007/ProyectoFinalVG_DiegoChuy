@@ -41,6 +41,14 @@ st.markdown("""
         background-color: #f1f5f9;
         color: #334155;
     }
+    span[data-baseweb="tag"] {
+        background-color: #3b82f6 !important; 
+        color: white !important;
+        border: none !important;
+    }
+    span[data-baseweb="tag"] svg {
+        color: white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
