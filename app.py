@@ -20,21 +20,26 @@ st.set_page_config(
 # Estilo para forzar un ancho centrado y profesional
 st.markdown("""
     <style>
-    /* Restringimos el ancho máximo de toda la aplicación y la centramos */
     .block-container {
-        max-width: 1100px !important; /* Ajusta este número: 900px (más angosto) a 1400px (más ancho) */
+        max-width: 1200px !important;
         padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        margin: 0 auto !important; /* Esto garantiza que el bloque quede en el mero centro */
+        margin: 0 auto !important;
+        background-color: #fcfcfc;
     }
-    
-    /* Estilo de las tarjetas de métricas (KPIs) */
+    h1 { color: #0f172a !important; font-weight: 800 !important; }
+    h2 { color: #1e293b !important; border-left: 5px solid #10b981; padding-left: 15px; }
     [data-testid="stMetric"] {
-        background-color: #f8f9fb;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        border: 1px solid #ebedef;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        border-top: 4px solid #10b981; /* Verde futbolístico */
+    }
+    .stAlert {
+        border-radius: 10px;
+        border: none;
+        background-color: #f1f5f9;
+        color: #334155;
     }
     </style>
     """, unsafe_allow_html=True)
