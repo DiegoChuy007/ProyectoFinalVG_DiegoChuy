@@ -149,6 +149,13 @@ df_carga['torneo_temp'] = df_carga['Liga/Torneo'].astype(str).str.lower()
 torneos_elegidos = opciones_filtro[seleccion_usuario]
 df_carga_filtrada = df_carga[df_carga['torneo_temp'].isin(torneos_elegidos)]
 carga_por_temporada = df_carga_filtrada.groupby(['Temporada', 'Tipo_Competicion'])['Minutos_Totales'].sum().reset_index()
+diccionario_traduccion = {
+    'domestic_league': 'Liga Local',
+    'domestic_cup': 'Copa Nacional',
+    'international_cup': 'Torneo Internacional',
+    'other': 'Otros'
+}
+carga_por_temporada['Tipo_Competicion'] = carga_por_temporada['Tipo_Competicion'].replace(diccionario_traduccion)
 #Lógica de Filtrado para lesiones
 #Las lesiones están atadas a la liga principal del club, así que filtramos según lo seleccionado
 if "Premier" in seleccion_usuario:
