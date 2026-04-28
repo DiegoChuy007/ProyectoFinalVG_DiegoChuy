@@ -198,11 +198,17 @@ with col_der:
         layer="below",       
         line_width=2, 
         line_dash="dot",     
-        line_color="#d62728",
-        annotation_text="⚠️ Período Crisis COVID-19", 
-        annotation_position="top",
-        annotation_font_color="#d62728",
-        annotation_font_size=13
+        line_color="#d62728"
+    )
+    fig_lesiones_año.add_annotation(
+        x="2020-2021",   
+        y=1,             
+        yref="paper",    
+        text="⚠️ Período Crisis COVID-19",
+        showarrow=False,
+        xshift=65,       
+        yshift=20,       
+        font=dict(color="#d62728", size=13)
     )
     st.plotly_chart(fig_lesiones_año, use_container_width=True)
 st.divider()
