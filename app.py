@@ -373,7 +373,7 @@ else:
         size='Dias_Perdidos_Totales',
         size_max=20,
         range_x=[-100, df_costo_filtrado['Dias_Perdidos_Totales'].max() + 300],
-        range_y=[22, -1], 
+        range_y=[20.5, 0.5], 
         color_discrete_sequence=['#0f172a', '#10b981', '#2563eb', '#38bdf8', '#64748b', '#34d399']
     )
     #Verificamos que el botón de play exista antes de cambiar la velocidad
