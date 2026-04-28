@@ -33,7 +33,7 @@ st.markdown("""
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        border-top: 4px solid #10b981; /* Verde futbolístico */
+        border-top: 4px solid #10b981; 
     }
     .stAlert {
         border-radius: 10px;
@@ -72,6 +72,11 @@ except Exception as e:
 
 #Encabezado principal 
 st.title("La epidemia de lesiones: El verdadero costo del fútbol moderno")
+st.image(
+    "imagen.jpeg", 
+    caption="Fuente: https://mbpschool.com/las-lesiones-en-el-futbol/", 
+    use_container_width=True
+)
 st.subheader("Más torneos, más partidos, más minutos, más exigencia. El límite físico de los jugadores frente a un calendario que no se detiene.")
 st.markdown("""
 El fútbol de élite ha evolucionado hacia un espectáculo de máxima intensidad, pero el cuerpo humano tiene un límite. Hoy, los sindicatos de jugadores en todo el mundo levantan la voz ante una realidad innegable: 
