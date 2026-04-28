@@ -352,27 +352,36 @@ with col_filtro2:
 #Aplicamos el filtro final
 df_costo_filtrado = df_previo[df_previo['Equipo'].isin(equipos_seleccionados)]
 #Gráfica de Dispersión interactiva
+# Gráfica de Dispersión interactiva ANIMADA
 fig_costo = px.scatter(
-    df_costo_filtrado, 
+    df_costo_filtrado.sort_values('Temporada'), # Ordenamos para que la animación fluya correctamente
     x='Dias_Perdidos_Totales', 
     y='Posicion_Final', 
-    color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', #Cambia color a equipo si son pocos
+    animation_frame='Temporada', # <-- ESTA ES LA LÍNEA MÁGICA
+    animation_group='Equipo',    # <-- Le dice a Plotly que siga al mismo equipo a través de los años
+    color='Equipo' if len(equipos_seleccionados) < 10 else 'Liga', 
     hover_name='Equipo',
-    hover_data=['Temporada', 'Liga'],
-    title=f"Análisis Personalizado: Lesiones vs Posición",
+    hover_data=['Liga'],
+    title="Evolución Histórica: Lesiones vs Posición",
     labels={
         'Dias_Perdidos_Totales': 'Total de Días de Baja Médica', 
         'Posicion_Final': 'Posición en la Tabla'
     },
     size='Dias_Perdidos_Totales',
-    size_max=15,
-    text='Temporada' if len(equipos_seleccionados) == 1 else None, #Si elige solo un equipo, muestra la temporada en el punto
+    size_max=20,
+    # Fijamos los ejes para que la "caja" de la gráfica no brinque durante la animación
+    range_x=[-100, df_costo_filtrado['Dias_Perdidos_Totales'].max() + 300],
+    range_y=[22, -1], # Eje Y invertido para que el 1 (Campeón) esté arriba
     color_discrete_sequence=['#0f172a', '#10b981', '#2563eb', '#38bdf8', '#64748b', '#34d399']
 )
-#Estética de la gráfica
-fig_costo.update_traces(textposition='top center')
-fig_costo.update_yaxes(autorange="reversed", dtick=1) 
-fig_costo.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+
+# Estética de la gráfica animada
+fig_costo.update_yaxes(dtick=1) 
+fig_costo.update_layout(
+    paper_bgcolor="rgba(0,0,0,0)", 
+    plot_bgcolor="rgba(0,0,0,0)",
+    updatemenus=[dict(type="buttons", showactive=False)] # Limpia un poco los botones del reproductor
+)
 st.plotly_chart(fig_costo, use_container_width=True)
 st.success("¡Análisis visual completado! La narrativa de datos está lista para ser presentada.")
 
