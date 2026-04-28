@@ -19,15 +19,13 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-    /* Aumentamos el padding lateral para centrar más el contenido */
     .main .block-container {
-        padding-left: 15rem;   /* Antes estaba en 8rem */
-        padding-right: 15rem;  /* Antes estaba en 8rem */
+        padding-left: 25rem;   
+        padding-right: 25rem;  
         padding-top: 3rem;
         padding-bottom: 3rem;
+        max-width: 100%;
     }
-    
-    /* Mantenemos el estilo de las métricas */
     [data-testid="stMetric"] {
         background-color: #f8f9fb;
         padding: 25px;
@@ -68,27 +66,30 @@ st.divider()
 st.info("¡Datos cargados correctamente! Listos para graficar.")
 import plotly.express as px
 
-#==========================================
-#Resumen Ejecutivo (KPIs)
-#==========================================
-st.subheader("Resumen Global del Impacto")
+# ==========================================
+# Resumen Ejecutivo (KPIs)
+# ==========================================
+st.subheader("Resumen de la Élite Europea (Premier, LaLiga, Serie A)")
+#Filtramos la data para que los KPIs coincidan con tu narrativa
+filtro_top3 = df_lesiones['league'].str.contains('Premier|LaLiga|La Liga|Serie A', case=False, na=False)
+df_les_kpi = df_lesiones[filtro_top3]
+#Hacemos lo mismo para la carga física 
+filtro_carga_top3 = df_carga['Liga/Torneo'].str.contains('premier-league|laliga|serie-a', case=False, na=False)
+df_carga_kpi = df_carga[filtro_carga_top3]
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-
-#Cálculos globales basados en tus DataFrames
-total_lesiones_global = len(df_lesiones)
-total_dias_perdidos = df_lesiones['Days'].sum()
-avg_dias_lesion = df_lesiones['Days'].mean()
-total_minutos_global = df_carga['Minutos_Totales'].sum() / 1e6 # En millones
-
+#Cálculos basados únicamente en las 3 ligas principales
+total_lesiones_global = len(df_les_kpi)
+total_dias_perdidos = df_les_kpi['Days'].sum()
+avg_dias_lesion = df_les_kpi['Days'].mean()
+total_minutos_global = df_carga_kpi['Minutos_Totales'].sum() / 1e6 
 with kpi1:
-    st.metric("Lesiones Totales", f"{total_lesiones_global:,}")
+    st.metric("Lesiones (Top 3)", f"{total_lesiones_global:,}")
 with kpi2:
     st.metric("Días de Baja", f"{total_dias_perdidos:,}")
 with kpi3:
     st.metric("Promedio por Lesión", f"{avg_dias_lesion:.1f} días")
 with kpi4:
-    st.metric("Carga Física Total", f"{total_minutos_global:.1f}M min")
-
+    st.metric("Carga Física", f"{total_minutos_global:.1f}M min")
 st.divider()
 
 #==========================================
