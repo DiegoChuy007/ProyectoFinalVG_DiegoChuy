@@ -204,7 +204,7 @@ with col_der:
         x="2020-2021",   
         y=1,             
         yref="paper",    
-        text="⚠️ Período Crisis COVID-19",
+        text="Período Crisis COVID-19",
         showarrow=False,
         xshift=65,       
         yshift=20,       
