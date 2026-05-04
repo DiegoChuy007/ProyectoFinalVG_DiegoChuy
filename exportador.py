@@ -82,8 +82,14 @@ for clave_liga, valores_liga in ligas_diccionario.items():
     # ==========================================
     # ACTO 3: COSTO DEPORTIVO (Dispersión/Scatter)
     # ==========================================
-    texto_filtro_costo = 'Premier League' if clave_liga == 'premier' else 'LaLiga' if clave_liga == 'laliga' else 'Serie A' if clave_liga == 'seriea' else ''
-    df_costo_filtrado = df_costo[df_costo['Liga'] == texto_filtro_costo] if texto_filtro_costo else df_costo
+    if clave_liga == "todas":
+        df_costo_filtrado = df_costo
+    elif clave_liga == "premier":
+        df_costo_filtrado = df_costo[df_costo['Liga'].str.contains('premier', case=False, na=False)]
+    elif clave_liga == "laliga":
+        df_costo_filtrado = df_costo[df_costo['Liga'].str.contains('laliga|la liga', case=False, na=False)]
+    elif clave_liga == "seriea":
+        df_costo_filtrado = df_costo[df_costo['Liga'].str.contains('serie', case=False, na=False)]
 
     fig_costo = px.scatter(
         df_costo_filtrado,
@@ -95,5 +101,3 @@ for clave_liga, valores_liga in ligas_diccionario.items():
         color_discrete_sequence=['#0f172a', '#10b981', '#2563eb', '#38bdf8', '#64748b', '#34d399']
     )
     fig_costo.write_image(f"costo_{clave_liga}.png", width=800, height=450)
-
-print("¡Listo! Revisa la carpeta, ahora sí deben ser 12 imágenes exactas.")
